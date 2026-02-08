@@ -10,6 +10,7 @@ namespace Ecommerce.Infra.Context
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
         public DbSet<Endereco> Enderecos { get; set; }
+        public DbSet<Produto> Produtos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -34,7 +35,14 @@ namespace Ecommerce.Infra.Context
                     .WithMany(c => c.Enderecos)
                     .HasForeignKey(e => e.ClienteId)
                     .OnDelete(DeleteBehavior.Cascade);
-            }); 
+            });
+
+            modelBuilder.Entity<Produto>(entity => 
+            { entity.HasIndex(p => p.SKU).IsUnique();
+                entity.Property(p => p.Nome).IsRequired().HasMaxLength(200);
+                entity.Property(p => p.RowVersion).IsConcurrencyToken(); // Controle de concorrência (;
+
+            });
         }
     }
 }
