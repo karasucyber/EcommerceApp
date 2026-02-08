@@ -34,6 +34,15 @@ namespace Ecommerce.Domain.Entities
 
         public void AdicionarItem(int produtoId, string nomeProduto, int quantidade, decimal precoUnitario)
         {
+            if (quantidade <= 0)
+                throw new ArgumentException("A quantidade deve ser maior que zero.");
+
+            if (precoUnitario < 0)
+                throw new ArgumentException("O preço não pode ser negativo.");
+
+            if (string.IsNullOrWhiteSpace(nomeProduto))
+                throw new ArgumentException("O nome do produto não pode ser vazio.");
+
             var item = new ItemPedido(produtoId, nomeProduto, quantidade, precoUnitario);
             _itens.Add(item);
             CalcularValorTotal();
@@ -48,5 +57,15 @@ namespace Ecommerce.Domain.Entities
             Status = novoStatus;
             AtualizarData();
         }
+        public void CancelarPedido()
+        {
+            if (Status == StatusPedido.Pago)
+            {
+                throw new InvalidOperationException("Não é permitido cancelar um pedido que já foi pago.");
+            }
+
+            Status = StatusPedido.Cancelado;
+        }
+
     }
 }
