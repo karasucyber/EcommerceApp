@@ -1,0 +1,13 @@
+<nav class="navbar">
+  <div class="brand">
+    <span class="logo-text">GRUPO GPS</span>
+    <span class="divider">|</span>
+    <span class="app-title">E-commerce Enterprise</span>
+  </div>
+
+  <div class="user-info" *ngIf="authService.isAuthenticated()">
+    <span class="user-name">Olá, {{ authService.currentUser()?.nome }}</span>
+    <span class="user-role badge-role">{{ authService.currentUser()?.perfil }}</span>
+    <button (click)="logout()" class="btn-logout">Sair</button>
+  </div>
+</nav>

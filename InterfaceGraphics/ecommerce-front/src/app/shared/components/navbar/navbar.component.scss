@@ -1,0 +1,41 @@
+.navbar {
+  background-color: var(--gps-blue);
+  color: var(--gps-white);
+  padding: 0 2rem;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    .logo-text { font-weight: 800; font-size: 1.4rem; }
+    .divider { color: rgba(255,255,255,0.3); }
+    .app-title { font-weight: 300; font-size: 0.9rem; letter-spacing: 1px; }
+  }
+
+  .user-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    .badge-role {
+      background: rgba(255,255,255,0.2);
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+    }
+    .btn-logout {
+      background: transparent;
+      border: 1px solid white;
+      color: white;
+      padding: 4px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      &:hover { background: white; color: var(--gps-blue); }
+    }
+  }
+}

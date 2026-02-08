@@ -1,0 +1,53 @@
+<div class="dashboard-page" *ngIf="data() as dashboard">
+  <header class="header">
+    <h1>Dashboard Financeira</h1>
+    <p>Análise de Impacto por Produto</p>
+  </header>
+
+  <div class="kpi-grid">
+    <div class="card">
+      <small>Faturamento Total</small>
+      <h2>{{ dashboard.faturamentoTotal | currency:'BRL' }}</h2>
+    </div>
+    <div class="card">
+      <small>Total de Pedidos</small>
+      <h2>{{ dashboard.totalPedidos }}</h2>
+    </div>
+    <div class="card highlight">
+      <small>Ticket Médio</small>
+      <h2>{{ dashboard.ticketMedio | currency:'BRL' }}</h2>
+    </div>
+  </div>
+
+  <section class="ranking-section">
+    <div class="section-header">
+      <h3>Ranking de Relevância no Faturamento</h3>
+      <span>Exibindo {{ dashboard.itensCurvaABC.length }} produtos</span>
+    </div>
+
+    <div class="ranking-list">
+      <div class="ranking-item" *ngFor="let item of dashboard.itensCurvaABC; let i = index">
+        <div class="info">
+          <span class="pos">#{{ i + 1 }}</span>
+          <div class="name-box">
+            <strong>{{ item.nome }}</strong>
+            <small>Classe {{ item.classe === 1 ? 'A' : item.classe === 2 ? 'B' : 'C' }}</small>
+          </div>
+        </div>
+
+        <div class="progress-container">
+          <div class="progress-bar" 
+               [style.width.%]="item.porcentagemNoFaturamento"
+               [style.background-color]="getClasseColor(item.classe)">
+          </div>
+          <span class="percent">{{ item.porcentagemNoFaturamento | number:'1.1-1' }}%</span>
+        </div>
+
+        <div class="values">
+          <strong>{{ item.valorGerado | currency:'BRL' }}</strong>
+          <small>{{ item.quantidadeVendida }} vendas</small>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
