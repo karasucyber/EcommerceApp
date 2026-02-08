@@ -30,7 +30,8 @@ namespace Ecommerce.Application.Services
             var usuario = await _usuarioRepository.ObterPorEmailAsync(request.Email);
 
             if (usuario == null) return null;
-            if (!_passwordHasher.Verify(request.Senha, usuario.Senha)) return null; 
+            if (!_passwordHasher.Verify(request.Senha, usuario.Senha)) return null;
+            if (!usuario.Ativo) throw new Exception("Esta conta foi desativa entre em contato com o ADM");
 
             var accessToken = _tokenService.GerarToken(usuario);
             var refreshToken = _tokenService.GerarRefreshToken(usuario);
