@@ -35,7 +35,7 @@ namespace Ecommerce.Api.Controllers
                     produto.AtualizarEstoque(-itemDto.Quantidade);
                     await _uow.Produtos.AtualizarAsync(produto);
 
-                    pedido.AdicionarItem(produto.Id, itemDto.Quantidade, produto.PrecoVenda);
+                    pedido.AdicionarItem(produto.Id, produto.Nome, itemDto.Quantidade, produto.PrecoVenda);
                 }
 
                 await _uow.Pedidos.AdicionarAsync(pedido);

@@ -6,6 +6,8 @@ namespace Ecommerce.Domain.Interfaces
     {
         Task<Carteira?> ObterPorClienteIdAsync(int clienteId);
 
+        Task<IEnumerable<Carteira>> ObterTodosAsync();
+
         Task AdicionarAsync(Carteira carteira);
         Task AtualizarAsync(Carteira carteira);
 

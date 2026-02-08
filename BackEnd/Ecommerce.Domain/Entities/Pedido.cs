@@ -27,11 +27,16 @@ namespace Ecommerce.Domain.Entities
             ValorTotal = 0;
         }
 
-        public void AdicionarItem(int produtoId, int quantidade, decimal precoUnitario)
+        private void CalcularValorTotal()
         {
-            var item = new ItemPedido(produtoId, quantidade, precoUnitario);
+            ValorTotal = _itens.Sum(item => item.PrecoUnitario * item.Quantidade);
+        }
+
+        public void AdicionarItem(int produtoId, string nomeProduto, int quantidade, decimal precoUnitario)
+        {
+            var item = new ItemPedido(produtoId, nomeProduto, quantidade, precoUnitario);
             _itens.Add(item);
-            ValorTotal += (quantidade * precoUnitario);
+            CalcularValorTotal();
         }
 
         public void AlterarStatus(StatusPedido novoStatus)

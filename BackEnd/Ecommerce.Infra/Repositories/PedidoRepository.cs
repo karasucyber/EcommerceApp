@@ -30,5 +30,12 @@ namespace Ecommerce.Infra.Repositories
                 .Include(p => p.Itens)
                 .FirstOrDefaultAsync(p => p.Id == id);
         }
+        public async Task<IEnumerable<Pedido>> ObterTodosAsync()
+        {
+            return await _context.Pedidos
+                .Include(p => p.Itens) 
+                .AsNoTracking()        
+                .ToListAsync();
+        }
     }
 }

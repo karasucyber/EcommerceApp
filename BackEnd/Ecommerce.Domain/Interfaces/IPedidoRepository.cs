@@ -10,6 +10,7 @@ namespace Ecommerce.Domain.Interfaces
     public interface IPedidoRepository
     {
         Task<Pedido> AdicionarAsync(Pedido pedido);
+        Task<IEnumerable<Pedido>> ObterTodosAsync(); 
         Task<Pedido> AtualizarAsync(Pedido pedido);
         Task<Pedido?> ObterPorIdCompletoAsync(int id);
     }

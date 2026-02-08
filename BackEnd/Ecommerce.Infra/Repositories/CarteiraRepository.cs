@@ -42,5 +42,9 @@ namespace Ecommerce.Infra.Repositories
                 .OrderByDescending(m => m.DataCadastro) 
                 .ToListAsync();
         }
+        public async Task<IEnumerable<Carteira>> ObterTodosAsync()
+        {
+            return await _context.Carteiras.AsNoTracking().ToListAsync();
+        }
     }
 }
