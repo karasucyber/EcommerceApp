@@ -1,4 +1,7 @@
+C:\Users\marqu\Desktop\Projetos\ProjetoGPS\BackEnd\Ecommerce.Tests\bin\Debug\net6.0\xunit.abstractions.dll
+C:\Users\marqu\Desktop\Projetos\ProjetoGPS\BackEnd\Ecommerce.Tests\bin\Debug\net6.0\xunit.runner.visualstudio.testadapter.dll
 C:\Users\marqu\Desktop\Projetos\ProjetoGPS\BackEnd\Ecommerce.Tests\bin\Debug\net6.0\Ecommerce.Tests.deps.json
+C:\Users\marqu\Desktop\Projetos\ProjetoGPS\BackEnd\Ecommerce.Tests\bin\Debug\net6.0\Ecommerce.Tests.runtimeconfig.json
 C:\Users\marqu\Desktop\Projetos\ProjetoGPS\BackEnd\Ecommerce.Tests\bin\Debug\net6.0\Ecommerce.Tests.dll
 C:\Users\marqu\Desktop\Projetos\ProjetoGPS\BackEnd\Ecommerce.Tests\bin\Debug\net6.0\Ecommerce.Tests.pdb
 C:\Users\marqu\Desktop\Projetos\ProjetoGPS\BackEnd\Ecommerce.Tests\bin\Debug\net6.0\Ecommerce.Application.dll
@@ -15,4 +18,5 @@ C:\Users\marqu\Desktop\Projetos\ProjetoGPS\BackEnd\Ecommerce.Tests\obj\Debug\net
 C:\Users\marqu\Desktop\Projetos\ProjetoGPS\BackEnd\Ecommerce.Tests\obj\Debug\net6.0\Ecommerce.Tests.dll
 C:\Users\marqu\Desktop\Projetos\ProjetoGPS\BackEnd\Ecommerce.Tests\obj\Debug\net6.0\refint\Ecommerce.Tests.dll
 C:\Users\marqu\Desktop\Projetos\ProjetoGPS\BackEnd\Ecommerce.Tests\obj\Debug\net6.0\Ecommerce.Tests.pdb
+C:\Users\marqu\Desktop\Projetos\ProjetoGPS\BackEnd\Ecommerce.Tests\obj\Debug\net6.0\Ecommerce.Tests.genruntimeconfig.cache
 C:\Users\marqu\Desktop\Projetos\ProjetoGPS\BackEnd\Ecommerce.Tests\obj\Debug\net6.0\ref\Ecommerce.Tests.dll
