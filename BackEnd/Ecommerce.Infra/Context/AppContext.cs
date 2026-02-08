@@ -11,7 +11,8 @@ namespace Ecommerce.Infra.Context
         public DbSet<Cliente> Clientes { get; set; }
         public DbSet<Endereco> Enderecos { get; set; }
         public DbSet<Produto> Produtos { get; set; }
-
+        public DbSet<Pedido> Pedidos { get; set; }
+        public DbSet<ItemPedido> ItensPedido { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -42,6 +43,23 @@ namespace Ecommerce.Infra.Context
                 entity.Property(p => p.Nome).IsRequired().HasMaxLength(200);
                 entity.Property(p => p.RowVersion).IsConcurrencyToken(); // Controle de concorrência (;
 
+            });
+
+            modelBuilder.Entity<Pedido>(entity =>
+            {
+                entity.HasKey(p => p.Id);
+                entity.Property(p => p.ValorTotal).HasPrecision(18, 2);
+
+                entity.HasMany(p => p.Itens)
+                      .WithOne()
+                      .HasForeignKey(i => i.PedidoId)
+                      .OnDelete(DeleteBehavior.Cascade); // se for apagar os dados para testar ele irá apagar os dados relacionaos
+            });
+
+            modelBuilder.Entity<ItemPedido>(entity =>
+            {
+                entity.HasKey(i => i.Id);
+                entity.Property(i => i.PrecoUnitario).HasPrecision(18, 2);
             });
         }
     }

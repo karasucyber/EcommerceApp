@@ -12,5 +12,6 @@ namespace Ecommerce.Domain.Interfaces
         Task<Produto?> AdicionarAsync(Produto produto);
         Task<Produto?> ObterPorSkuAsync(string sku);
         Task AtualizarAsync(Produto produto);
+        Task<Produto?> ObterPorIdAsync(int id);
     }
 }

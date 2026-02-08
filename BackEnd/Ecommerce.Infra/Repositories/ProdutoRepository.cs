@@ -32,5 +32,10 @@ namespace Ecommerce.Infra.Repositories
             _context.Produtos.Update(produto);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<Produto?> ObterPorIdAsync(int id)
+        {
+            return await _context.Produtos.FindAsync(id);
+        }
     }
 }
