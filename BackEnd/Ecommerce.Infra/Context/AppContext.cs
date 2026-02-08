@@ -1,10 +1,5 @@
 ﻿using Ecommerce.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Ecommerce.Infra.Context
 {
@@ -13,6 +8,8 @@ namespace Ecommerce.Infra.Context
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Cliente> Clientes { get; set; }
+        public DbSet<Endereco> Enderecos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -23,6 +20,21 @@ namespace Ecommerce.Infra.Context
             modelBuilder.Entity<Usuario>()
                 .HasIndex(u => u.Email)
                 .IsUnique();
+
+            modelBuilder.Entity<Cliente>(entity =>
+            {
+                entity.HasIndex(c => c.CPF).IsUnique();
+                entity.Property(c => c.Nome).IsRequired().HasMaxLength(150);
+                entity.Property(c => c.Email).IsRequired().HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<Endereco>(entity =>
+            {
+                entity.HasOne<Cliente>()
+                    .WithMany(c => c.Enderecos)
+                    .HasForeignKey(e => e.ClienteId)
+                    .OnDelete(DeleteBehavior.Cascade);
+            }); 
         }
     }
 }
