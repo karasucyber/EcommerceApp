@@ -1,6 +1,7 @@
 ﻿using Ecommerce.Application.DTOs;
 using Ecommerce.Domain.Entities;
 using Ecommerce.Domain.Enum;
+using Ecommerce.Domain.Enums;
 using Ecommerce.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,13 +11,11 @@ namespace Ecommerce.Api.Controllers
     [Route("api/[controller]")]
     public class PedidoController : ControllerBase
     {
-        private readonly IPedidoRepository _pedidoRepo;
-        private readonly IProdutoRepository _produtoRepo;
+        private readonly IUnitOfWork _uow; // porderia ter implementado desde o começo ):
 
-        public PedidoController(IPedidoRepository pedidoRepo, IProdutoRepository produtoRepo)
+        public PedidoController(IUnitOfWork uow)
         {
-            _pedidoRepo = pedidoRepo;
-            _produtoRepo = produtoRepo;
+            _uow = uow;
         }
 
         [HttpPost]
@@ -24,64 +23,94 @@ namespace Ecommerce.Api.Controllers
         {
             var pedido = new Pedido(dto.ClienteId, dto.EnderecoId);
 
-            foreach (var itemDto in dto.Itens)
-            {
-                var produto = await _produtoRepo.ObterPorSkuAsync(itemDto.Sku);
-                if (produto == null) return BadRequest($"Produto {itemDto.Sku} não existe.");
+            await _uow.BeginTransactionAsync();
 
-                try
+            try
+            {
+                foreach (var itemDto in dto.Itens)
                 {
-                    produto.AtualizarEstoque(-itemDto.Quantidade); // Baixa estoque
-                    await _produtoRepo.AtualizarAsync(produto);
+                    var produto = await _uow.Produtos.ObterPorSkuAsync(itemDto.Sku);
+                    if (produto == null) return BadRequest($"Produto {itemDto.Sku} não existe.");
+
+                    produto.AtualizarEstoque(-itemDto.Quantidade);
+                    await _uow.Produtos.AtualizarAsync(produto);
 
                     pedido.AdicionarItem(produto.Id, itemDto.Quantidade, produto.PrecoVenda);
                 }
-                catch (Exception ex)
-                {
-                    return BadRequest($"Erro no produto {produto.Nome}: {ex.Message}");
-                }
-            }
 
-            await _pedidoRepo.AdicionarAsync(pedido);
-            return Ok(new { PedidoId = pedido.Id, Total = pedido.ValorTotal, Status = "Criado" });
+                await _uow.Pedidos.AdicionarAsync(pedido);
+
+                await _uow.CommitTransactionAsync();
+
+                return Ok(new
+                {
+                    PedidoId = pedido.Id,
+                    Total = pedido.ValorTotal,
+                    Status = pedido.Status.ToString()
+                });
+            }
+            catch (Exception ex)
+            {
+                await _uow.RollbackTransactionAsync();
+                return BadRequest($"Erro ao processar pedido: {ex.Message}");
+            }
         }
 
         [HttpPatch("{id}/cancelar")]
         public async Task<IActionResult> Cancelar(int id)
         {
-            var pedido = await _pedidoRepo.ObterPorIdCompletoAsync(id);
-
+            var pedido = await _uow.Pedidos.ObterPorIdCompletoAsync(id);
             if (pedido == null) return NotFound("Pedido não encontrado.");
 
             if (pedido.Status == StatusPedido.Cancelado)
                 return BadRequest("Este pedido já está cancelado.");
 
+            await _uow.BeginTransactionAsync();
+
             try
             {
-                pedido.AlterarStatus(StatusPedido.Cancelado);
-
                 foreach (var item in pedido.Itens)
                 {
-                    var produto = await _produtoRepo.ObterPorIdAsync(item.ProdutoId);
-
+                    var produto = await _uow.Produtos.ObterPorIdAsync(item.ProdutoId);
                     if (produto != null)
                     {
                         produto.AtualizarEstoque(item.Quantidade);
-                        await _produtoRepo.AtualizarAsync(produto);
+                        await _uow.Produtos.AtualizarAsync(produto);
                     }
                 }
 
-                await _pedidoRepo.AtualizarAsync(pedido);
+                if (pedido.Status == StatusPedido.Pago)
+                {
+                    var carteira = await _uow.Carteiras.ObterPorClienteIdAsync(pedido.ClienteId);
+                    if (carteira != null)
+                    {
+                        carteira.AdicionarCashback(pedido.ValorTotal);
 
-                return Ok(new { mensagem = "Pedido cancelado e estoque estornado com sucesso!" });
+                        var mov = new MovimentacaoCarteira(
+                            carteira.Id,
+                            pedido.ValorTotal,
+                            TipoMovimentacao.Credito,
+                            $"Estorno: Cancelamento Pedido #{pedido.Id}"
+                        );
+
+                        await _uow.Carteiras.AdicionarMovimentacaoAsync(mov);
+                        await _uow.Carteiras.AtualizarAsync(carteira);
+                    }
+                }
+
+                pedido.AlterarStatus(StatusPedido.Cancelado);
+                await _uow.Pedidos.AtualizarAsync(pedido);
+
+                await _uow.CommitTransactionAsync();
+
+                return Ok(new { mensagem = "Pedido cancelado, estoque e saldo estornados!" });
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                await _uow.RollbackTransactionAsync();
+                return BadRequest($"Erro no cancelamento: {ex.Message}");
             }
         }
-
-
-
     }
 }
+

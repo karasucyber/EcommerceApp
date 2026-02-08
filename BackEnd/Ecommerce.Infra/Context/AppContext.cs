@@ -13,6 +13,8 @@ namespace Ecommerce.Infra.Context
         public DbSet<Produto> Produtos { get; set; }
         public DbSet<Pedido> Pedidos { get; set; }
         public DbSet<ItemPedido> ItensPedido { get; set; }
+        public DbSet<Carteira> Carteiras { get; set; }
+        public DbSet<MovimentacaoCarteira> MovimentacoesCarteira { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -60,6 +62,21 @@ namespace Ecommerce.Infra.Context
             {
                 entity.HasKey(i => i.Id);
                 entity.Property(i => i.PrecoUnitario).HasPrecision(18, 2);
+            });
+
+            modelBuilder.Entity<Carteira>(entity =>
+            {
+                entity.HasKey(c => c.Id);
+                entity.Property(c => c.Saldo).HasPrecision(18, 2);
+                entity.HasIndex(c => c.ClienteId).IsUnique();
+            });
+
+            modelBuilder.Entity<MovimentacaoCarteira>(entity =>
+            {
+                entity.HasKey(m => m.Id);
+                entity.Property(m => m.Valor).HasPrecision(18, 2);
+                // Configura o Enum para ser salvo 
+                entity.Property(m => m.Tipo).IsRequired();
             });
         }
     }

@@ -17,6 +17,36 @@ namespace Ecommerce.Infra.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.26");
 
+            modelBuilder.Entity("Ecommerce.Domain.Entities.Carteira", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ClienteId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime?>("DataAtualizacao")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("DataCadastro")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("Saldo")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClienteId")
+                        .IsUnique();
+
+                    b.ToTable("Carteiras");
+                });
+
             modelBuilder.Entity("Ecommerce.Domain.Entities.Cliente", b =>
                 {
                     b.Property<int>("Id")
@@ -128,6 +158,40 @@ namespace Ecommerce.Infra.Migrations
                     b.HasIndex("PedidoId");
 
                     b.ToTable("ItensPedido");
+                });
+
+            modelBuilder.Entity("Ecommerce.Domain.Entities.MovimentacaoCarteira", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("CarteiraId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime?>("DataAtualizacao")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("DataCadastro")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Descricao")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Tipo")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<decimal>("Valor")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MovimentacoesCarteira");
                 });
 
             modelBuilder.Entity("Ecommerce.Domain.Entities.Pedido", b =>

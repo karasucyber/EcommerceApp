@@ -21,7 +21,8 @@ builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
 builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
-
+builder.Services.AddScoped<ICarteiraRepository, CarteiraRepository>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -54,4 +55,4 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-app.Run();
+    app.Run();
