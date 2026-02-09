@@ -6,7 +6,6 @@ import { Observable } from 'rxjs';
 export class CarteiraService {
   private http = inject(HttpClient);
   
-  // Confirme se a porta é a 50932 (vista no seu print de erro)
   private readonly API = 'https://localhost:50932/api/carteira';
 
   obterSaldoEExtrato(clienteId: number): Observable<any> {

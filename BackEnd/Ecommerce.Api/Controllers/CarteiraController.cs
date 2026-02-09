@@ -38,6 +38,9 @@ public class CarteiraController : ControllerBase
         await _carteiraRepo.AdicionarMovimentacaoAsync(mov);
         await _carteiraRepo.AtualizarAsync(carteira);
 
+
+        await _context.SaveChangesAsync();
+
         return Ok(new { SaldoAtual = carteira.Saldo });
     }
 

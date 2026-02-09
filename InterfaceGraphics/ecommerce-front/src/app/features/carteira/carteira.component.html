@@ -1,10 +1,75 @@
-<div style="padding: 2rem;">
-  <h1>Minha Carteira</h1>
-  <div style="background: #eee; padding: 2rem; border-radius: 8px; margin-bottom: 1rem;">
-    <h3>Saldo Disponível</h3>
-    <h1 style="color: green;">{{ saldo() | currency:'BRL' }}</h1>
+<div class="wallet-wrapper">
+  
+  <div class="header-section">
+    <h1>Minha Conta</h1>
+    <p>Gerenciamento financeiro simplificado</p>
   </div>
-  <button (click)="depositar()" style="padding: 10px 20px; background: green; color: white; border: none; cursor: pointer;">
-    + Adicionar R$ 100,00
-  </button>
+
+  <div class="main-grid">
+    
+    <div class="left-col">
+      
+      <div class="credit-card">
+        <div class="card-top">
+          <span class="chip"></span>
+          <span class="bank-name">GRUPO GPS</span>
+        </div>
+        <div class="card-body">
+          <span class="label">Saldo Disponível</span>
+          <div class="balance">{{ saldo() | currency:'BRL' }}</div>
+        </div>
+        <div class="card-footer">
+          <span>**** **** **** 1234</span>
+          <span>VAL 12/30</span>
+        </div>
+      </div>
+
+      <div class="action-card">
+        <h3>💰 Adicionar Dinheiro</h3>
+        <div class="input-wrapper">
+          <span class="currency">R$</span>
+          <input type="number" [(ngModel)]="valorDeposito" placeholder="0,00" min="1">
+        </div>
+        <button class="btn-deposit" (click)="depositar()" [disabled]="loading()">
+          {{ loading() ? 'Processando...' : 'Confirmar PIX' }}
+        </button>
+      </div>
+    </div>
+
+    <div class="right-col">
+      <div class="extract-header">
+        <h3>Histórico de Transações</h3>
+        <button class="btn-refresh" (click)="carregarDados()">🔄 Atualizar</button>
+      </div>
+      
+      <div class="extract-list">
+        <div *ngFor="let item of extrato()" class="extract-item">
+          
+          <div class="icon-box" 
+               [class.in]="isCredito(item)" 
+               [class.out]="!isCredito(item)">
+            {{ isCredito(item) ? '↓' : '↑' }}
+          </div>
+
+          <div class="info-box">
+            <span class="desc">{{ item.descricao || item.Descricao || 'Sem descrição' }}</span>
+            <span class="date">{{ (item.dataCadastro || item.DataCadastro) | date:'dd MMM yyyy - HH:mm' }}</span>
+          </div>
+
+          <div class="value-box" 
+               [class.positive]="isCredito(item)" 
+               [class.negative]="!isCredito(item)">
+            {{ isCredito(item) ? '+' : '-' }} {{ (item.valor || item.Valor) | currency:'BRL' }}
+          </div>
+
+        </div>
+
+        <div *ngIf="extrato().length === 0" class="empty-state">
+          <div class="ghost-icon">👻</div>
+          <p>Nenhuma movimentação encontrada.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </div>
