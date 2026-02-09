@@ -7,6 +7,7 @@ Este projeto é uma solução completa de E-commerce com gestão de pedidos, car
 ## 🚀 Tecnologias Utilizadas
 
 - **Backend:** .NET 6 (C#), Entity Framework Core, SQLite.
+- https://builds.dotnet.microsoft.com/dotnet/Sdk/6.0.428/dotnet-sdk-6.0.428-win-x64.exe
 - **Frontend:** Angular 18, Standalone Components, Signals.
 - **Testes:** xUnit.
 - **Arquitetura:** Clean Architecture, Repository Pattern, SOLID.
