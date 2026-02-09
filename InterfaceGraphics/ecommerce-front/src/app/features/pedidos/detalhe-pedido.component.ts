@@ -11,7 +11,7 @@ import { CarteiraService } from '../../core/services/carteira.service';
   templateUrl: './detalhe-pedido.component.html',
   styleUrl: './detalhe-pedido.component.scss'
 })
-export class DetalhePedidoComponent implements OnInit {
+export class DetalhePedidoComponent implements OnInit { // <--- O ERRO ERA AQUI: TEM QUE TER 'export'
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private pedidoService = inject(PedidoService);
@@ -21,6 +21,7 @@ export class DetalhePedidoComponent implements OnInit {
   saldoCarteira = signal<number>(0);
   processando = signal(false);
 
+  // --- ESTADO DO MODAL PADRÃO ---
   modal = {
     aberto: false,
     titulo: '',
@@ -58,7 +59,7 @@ export class DetalhePedidoComponent implements OnInit {
     });
   }
 
-
+  // LÓGICA DE PAGAMENTO
   verificarPagamento() {
     const valor = this.pedido().valorTotal;
     const saldo = this.saldoCarteira();
@@ -67,15 +68,13 @@ export class DetalhePedidoComponent implements OnInit {
     if (saldo < valor) {
       this.configurarModal({
         titulo: 'Saldo Insuficiente',
-        mensagem: `Você tem <strong>R$ ${saldo}</strong> e o pedido é <strong>R$ ${valor}</strong>.<br><br>
-                   Faltam <strong>R$ ${falta.toFixed(2)}</strong>.<br>
-                   Vamos para a carteira fazer um depósito?`,
-        tipo: 'warning', 
-        txtConfirmar: 'Sim, ir para Depósito',
+        mensagem: `Você tem <strong>R$ ${saldo}</strong> e o pedido é <strong>R$ ${valor}</strong>.<br>Faltam R$ ${falta.toFixed(2)}.`,
+        tipo: 'warning',
+        txtConfirmar: 'Ir para Depósito',
         txtCancelar: 'Agora não',
         acao: () => {
           this.fecharModal();
-          this.router.navigate(['/carteira']); // REDIRECTttttttt AQUIIIIIIII
+          this.router.navigate(['/carteira']);
         }
       });
       return;
@@ -83,9 +82,9 @@ export class DetalhePedidoComponent implements OnInit {
 
     this.configurarModal({
       titulo: 'Confirmar Pagamento',
-      mensagem: `Deseja pagar <strong>R$ ${valor}</strong> usando seu saldo de cashback?`,
-      tipo: 'success', // Verde
-      txtConfirmar: 'Confirmar Pagamento',
+      mensagem: `Deseja pagar <strong>R$ ${valor}</strong> com seu saldo?`,
+      tipo: 'success',
+      txtConfirmar: 'Pagar Agora',
       acao: () => this.efetuarPagamentoReal()
     });
   }
@@ -96,28 +95,28 @@ export class DetalhePedidoComponent implements OnInit {
       next: () => {
         this.processando.set(false);
         this.fecharModal();
-        alert('Pagamento realizado! ✅'); 
+        alert('Pagamento realizado! ✅');
         this.carregarDados(this.pedido().id);
       },
       error: (err) => {
         this.processando.set(false);
-        this.fecharModal(); 
+        this.fecharModal();
         alert('Erro: ' + (err.error || 'Falha no pagamento.'));
       }
     });
   }
 
-
+  // LÓGICA DE CANCELAMENTO
   prepararCancelamento() {
     const isPago = this.pedido().status === 'Pago';
     const msg = isPago 
-      ? `O valor será <strong>estornado integralmente</strong> para sua carteira.` 
+      ? `O valor será <strong>estornado integralmente</strong>.` 
       : `O pedido será cancelado sem custos.`;
 
     this.configurarModal({
       titulo: 'Cancelar Pedido?',
-      mensagem: `Tem certeza que deseja cancelar? <br><small>${msg}</small>`,
-      tipo: 'danger', // Vermelho
+      mensagem: `Tem certeza? <br><small>${msg}</small>`,
+      tipo: 'danger',
       txtConfirmar: 'Sim, Cancelar',
       acao: () => this.efetuarCancelamentoReal()
     });
@@ -138,16 +137,7 @@ export class DetalhePedidoComponent implements OnInit {
     });
   }
 
-
-  configurarModal(config: any) {
-    this.modal = { ...this.modal, ...config, aberto: true };
-  }
-
-  fecharModal() {
-    this.modal.aberto = false;
-  }
-
-  executarAcaoModal() {
-    if (this.modal.acao) this.modal.acao();
-  }
+  configurarModal(config: any) { this.modal = { ...this.modal, ...config, aberto: true }; }
+  fecharModal() { this.modal.aberto = false; }
+  executarAcaoModal() { if (this.modal.acao) this.modal.acao(); }
 }

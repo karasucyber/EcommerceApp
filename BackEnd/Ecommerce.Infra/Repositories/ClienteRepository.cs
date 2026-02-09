@@ -36,5 +36,12 @@ namespace Ecommerce.Infra.Repositories
             _context.Clientes.Update(cliente); 
             await _context.SaveChangesAsync();
         }
+
+        public async Task<List<Cliente>> ObterTodosAsync()
+        {
+            return await _context.Clientes
+                                 .AsNoTracking()
+                                 .ToListAsync();
+        }
     }
 }

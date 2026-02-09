@@ -95,3 +95,87 @@
     &:hover { background: #ef4444; color: white; }
   }
 }
+
+.sidebar {
+  width: 260px;
+  height: 100vh;
+  background: linear-gradient(180deg, #1e3a8a 0%, #172554 100%); /* Azul Profundo */
+  color: white;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  left: 0;
+  top: 0;
+  box-shadow: 4px 0 15px rgba(0,0,0,0.1);
+  font-family: 'Segoe UI', sans-serif;
+  z-index: 1000;
+}
+
+.logo {
+  padding: 30px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  
+  h2 { margin: 0; font-size: 1.5rem; letter-spacing: 1px; }
+  span { font-size: 0.8rem; opacity: 0.6; text-transform: uppercase; letter-spacing: 2px; }
+}
+
+.menu {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+
+  .section-title {
+    font-size: 0.75rem;
+    color: #93c5fd; /* Azul claro */
+    font-weight: bold;
+    margin: 20px 0 10px 10px;
+    letter-spacing: 1px;
+  }
+
+  a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 15px;
+    color: #e2e8f0;
+    text-decoration: none;
+    border-radius: 8px;
+    margin-bottom: 5px;
+    transition: all 0.2s;
+    font-weight: 500;
+
+    &:hover {
+      background: rgba(255,255,255,0.1);
+      color: white;
+      transform: translateX(5px);
+    }
+
+    &.active {
+      background: #3b82f6; /* Azul Vibrante */
+      color: white;
+      box-shadow: 0 4px 10px rgba(59, 130, 246, 0.4);
+    }
+  }
+}
+
+.footer {
+  padding: 20px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+
+  button {
+    width: 100%;
+    padding: 12px;
+    background: rgba(239, 68, 68, 0.2); /* Vermelho translúcido */
+    color: #fca5a5;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.2s;
+
+    &:hover {
+      background: #ef4444;
+      color: white;
+    }
+  }
+}

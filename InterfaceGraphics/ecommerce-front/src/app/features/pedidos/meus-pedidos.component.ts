@@ -1,42 +1,58 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { PedidoService } from '../../core/services/pedido.service';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-meus-pedidos',
   standalone: true,
-  imports: [CommonModule, RouterModule], 
+  imports: [CommonModule, RouterModule],
   templateUrl: './meus-pedidos.component.html',
   styleUrl: './meus-pedidos.component.scss'
 })
 export class MeusPedidosComponent implements OnInit {
   private pedidoService = inject(PedidoService);
-  private router = inject(Router);
+  private authService = inject(AuthService);
 
   pedidos = signal<any[]>([]);
-  carregando = signal<boolean>(true);
+  loading = signal(true);
+  
+  // SINAL DO FILTRO (Isso estava faltando)
+  filtroAtual = signal<string>('Todos');
+
+  // LÓGICA COMPUTADA (Isso estava faltando e gerou o erro NG9)
+  pedidosFiltrados = computed(() => {
+    const todos = this.pedidos();
+    const filtro = this.filtroAtual();
+
+    if (filtro === 'Todos') return todos;
+    
+    // Filtra comparando o status
+    return todos.filter(p => p.status === filtro);
+  });
 
   ngOnInit() {
-    this.carregarPedidos();
+    const user = this.authService.getUsuarioLogado();
+    const clienteId = user ? user.id : 1; // Fallback para teste se não tiver user
+    this.carregarPedidos(clienteId);
   }
 
-  carregarPedidos() {
-    const clienteId = 1; 
-
+  carregarPedidos(clienteId: number) {
     this.pedidoService.listarMeusPedidos(clienteId).subscribe({
       next: (data) => {
         this.pedidos.set(data);
-        this.carregando.set(false);
+        this.loading.set(false);
       },
       error: (err) => {
-        console.error('Erro ao buscar pedidos', err);
-        this.carregando.set(false);
+        console.error(err);
+        this.loading.set(false);
       }
     });
   }
 
-  verDetalhes(id: number) {
-    this.router.navigate(['/pedido', id]);
+  // Função chamada pelos botões do HTML
+  filtrar(status: string) {
+    this.filtroAtual.set(status);
   }
 }

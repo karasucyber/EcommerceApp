@@ -1,39 +1,38 @@
-<aside class="sidebar-wrapper">
-  
-  <div class="brand">
-    <div class="logo-icon">🛒</div>
-    <h2>DevStore</h2>
+<aside class="sidebar">
+  <div class="logo">
+    <h2>GPS Store</h2>
+    <span>E-commerce</span>
   </div>
 
-  <nav class="nav-menu">
+  <nav class="menu">
+    <p class="section-title">PRINCIPAL</p>
     
-    <span class="section-title">Principal</span>
-    
-    <a routerLink="/vitrine" routerLinkActive="active" class="nav-item">
-      <i class="icon">🛍️</i> Loja
+    <a routerLink="/vitrine" routerLinkActive="active">
+      🛍️ Vitrine
     </a>
     
-    <a routerLink="/meus-pedidos" routerLinkActive="active" class="nav-item">
-      <i class="icon">📦</i> Meus Pedidos
-    </a>
-    
-    <a routerLink="/carteira" routerLinkActive="active" class="nav-item">
-      <i class="icon">💳</i> Carteira
+    <a routerLink="/carteira" routerLinkActive="active">
+      💳 Minha Carteira
     </a>
 
-    <div class="divider"></div>
-    <span class="section-title">Administrativo</span>
-
-    <a routerLink="/dashboard" routerLinkActive="active" class="nav-item admin">
-      <i class="icon">📊</i> Dashboard Financeiro
+    <a routerLink="/meus-pedidos" routerLinkActive="active">
+      📦 Meus Pedidos
     </a>
 
+    <p class="section-title">ADMINISTRATIVO</p>
+
+    <a routerLink="/cadastro-produto" routerLinkActive="active">
+      ➕ Novo Produto
+    </a>
+
+    <a routerLink="/cadastro" routerLinkActive="active">
+      👤 Novo Cliente
+    </a>
   </nav>
 
   <div class="footer">
-    <button (click)="logout()" class="btn-logout">
-      <i>🚪</i> Sair
+    <button (click)="logout()">
+      🚪 Sair
     </button>
   </div>
-
 </aside>

@@ -7,6 +7,8 @@ import { DetalhePedidoComponent } from './features/pedidos/detalhe-pedido.compon
 import { DashboardComponent } from './features/dashboard/dashboard.component';
 import { MinhaCarteiraComponent } from './features/carteira/carteira.component';
 import { authGuard } from './core/guards/auth.guard';
+import { CadastroProdutoComponent } from './core/admin/CadastroProduto/cadastrar-produto.component';
+import { CadastroClienteComponent } from './core/admin/CadastroCliente/cadastro-cliente.componente';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'vitrine', pathMatch: 'full' },
@@ -21,7 +23,9 @@ export const routes: Routes = [
       { path: 'carteira', component: MinhaCarteiraComponent }, 
       { path: 'meus-pedidos', component: MeusPedidosComponent },
       { path: 'pedido/:id', component: DetalhePedidoComponent },
-      { path: 'dashboard', component: DashboardComponent }
+      { path: 'dashboard', component: DashboardComponent },
+      { path: 'cadastro-produto', component: CadastroProdutoComponent },
+{ path: 'cadastro', component: CadastroClienteComponent },
     ]
   }
 ];

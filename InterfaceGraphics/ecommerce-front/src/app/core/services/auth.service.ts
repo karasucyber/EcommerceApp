@@ -46,9 +46,8 @@ export class AuthService {
     );
   }
 
-  register(credentials: any): Observable<Usuario> {
-    return this.http.post<Usuario>(`${this.apiUrl}/Usuario/registrar`, credentials); 
- 
+  register(dados: any): Observable<any> {
+    return this.http.post(`https://localhost:50932/api/usuario/registrar`, dados);
   }
 
   logout() {

@@ -37,6 +37,13 @@ namespace Ecommerce.Api.Controllers
             return Ok(cliente);
         }
 
+        [HttpGet] // GET api/cliente
+        public async Task<IActionResult> ObterTodos()
+        {
+            var clientes = await _repository.ObterTodosAsync();
+            return Ok(clientes);
+        }
+
         [HttpPost("{clienteId}/endereco")]
         public async Task<IActionResult> AdicionarEndereco(int clienteId, [FromBody] EnderecoDto dto)
         {

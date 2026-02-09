@@ -23,7 +23,6 @@ export interface ResultadoVitrine {
 export class ProdutoService {
   private http = inject(HttpClient);
   
-
   private readonly API = 'https://localhost:50932/api/produto'; 
 
   obterVitrine(pagina: number = 1, tamanho: number = 10, termoBusca?: string): Observable<ResultadoVitrine> {
@@ -38,7 +37,16 @@ export class ProdutoService {
     return this.http.get<ResultadoVitrine>(`${this.API}/vitrine`, { params });
   }
 
+
+  obterTodos(): Observable<ResultadoVitrine> {
+    return this.obterVitrine(1, 100);
+  }
+
   ajustarEstoque(sku: string, quantidade: number): Observable<any> {
     return this.http.patch(`${this.API}/${sku}/estoque`, quantidade);
+  }
+
+  cadastrar(produto: any): Observable<any> {
+    return this.http.post(this.API, produto);
   }
 }

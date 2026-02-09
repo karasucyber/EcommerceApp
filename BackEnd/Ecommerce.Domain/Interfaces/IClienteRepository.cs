@@ -8,5 +8,6 @@ namespace Ecommerce.Domain.Interfaces
         Task<Cliente?> ObterPorCpfAsync(string cpf); 
         Task<Cliente?> ObterPorIdComEnderecosAsync(int id);
         Task AtualizarAsync(Cliente cliente);
+        Task<List<Cliente>> ObterTodosAsync();
     }
 }

@@ -19,14 +19,13 @@ namespace Ecommerce.Api.Controllers
             _context = context;
             _repository = repository;
         }
-
         [HttpGet("vitrine")]
         public async Task<IActionResult> ObterVitrine(
             [FromQuery] string? nome,
             [FromQuery] decimal? precoMin,
             [FromQuery] decimal? precoMax,
             [FromQuery] int pagina = 1,
-            [FromQuery] int tamanhoPagina = 10)
+            [FromQuery] int tamanhoPagina = 0) 
         {
             var query = _context.Produtos.AsNoTracking().AsQueryable();
 
@@ -39,14 +38,24 @@ namespace Ecommerce.Api.Controllers
             if (precoMax.HasValue)
                 query = query.Where(p => p.PrecoVenda <= precoMax.Value);
 
-            var totalItens = await query.CountAsync();
-            var totalPaginas = (int)Math.Ceiling(totalItens / (double)tamanhoPagina);
+            query = query.OrderByDescending(p => p.Id);
 
-            var itens = await query
-                .OrderBy(p => p.Nome)
-                .Skip((pagina - 1) * tamanhoPagina)
-                .Take(tamanhoPagina)
-                .ToListAsync();
+            var totalItens = await query.CountAsync();
+            List<Produto> itens;
+            int totalPaginas = 1;
+
+            if (tamanhoPagina > 0)
+            {
+                totalPaginas = (int)Math.Ceiling(totalItens / (double)tamanhoPagina);
+                itens = await query
+                    .Skip((pagina - 1) * tamanhoPagina)
+                    .Take(tamanhoPagina)
+                    .ToListAsync();
+            }
+            else
+            {
+                itens = await query.ToListAsync();
+            }
 
             var resultado = new ResultadoPaginadoDto<Produto>(itens, totalItens, pagina, totalPaginas);
 
