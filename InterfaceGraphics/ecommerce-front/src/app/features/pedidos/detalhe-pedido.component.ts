@@ -1,13 +1,13 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { PedidoService } from '../../core/services/pedido.service';
-import { CarteiraService } from '../../core/services/carteira.service'; 
-import { PedidoTimelineComponent } from '../../core/timeline/pedido-timeline.component';
+import { CarteiraService } from '../../core/services/carteira.service';
+
 @Component({
   selector: 'app-detalhe-pedido',
   standalone: true,
-  imports: [CommonModule, PedidoTimelineComponent],
+  imports: [CommonModule, RouterModule],
   templateUrl: './detalhe-pedido.component.html',
   styleUrl: './detalhe-pedido.component.scss'
 })
@@ -19,67 +19,135 @@ export class DetalhePedidoComponent implements OnInit {
 
   pedido = signal<any>(null);
   saldoCarteira = signal<number>(0);
-  carregando = signal<boolean>(true);
+  processando = signal(false);
+
+  modal = {
+    aberto: false,
+    titulo: '',
+    mensagem: '',
+    tipo: 'info', 
+    txtConfirmar: 'Confirmar',
+    txtCancelar: 'Cancelar',
+    acao: () => {} 
+  };
+
+  podeCancelar = computed(() => {
+    const p = this.pedido();
+    if (!p) return false;
+    return !['Entregue', 'Cancelado', 'Enviado'].includes(p.status);
+  });
 
   ngOnInit() {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    if (id) {
-      this.carregarDados(id);
-    }
+    if (id) this.carregarDados(id);
   }
 
   carregarDados(pedidoId: number) {
-    this.carregando.set(true);
-    
     this.pedidoService.obterPorId(pedidoId).subscribe({
-      next: (data: any) => {
+      next: (data) => {
         this.pedido.set(data);
-        
-        if (data.statusId === 1) {
-          this.buscarSaldo(data.clienteId);
-        }
-        this.carregando.set(false);
+        if (data.status === 'Criado') this.buscarSaldo(data.clienteId);
       },
-      error: (err: any) => {
-        alert('Erro ao carregar pedido.');
-        this.router.navigate(['/meus-pedidos']);
-      }
+      error: () => this.router.navigate(['/vitrine'])
     });
   }
 
   buscarSaldo(clienteId: number) {
     this.carteiraService.obterSaldoEExtrato(clienteId).subscribe((res: any) => {
-      this.saldoCarteira.set(res.saldoAtual);
+      this.saldoCarteira.set(res.saldoAtual ?? res.saldo ?? 0);
     });
   }
 
-  pagarComCashback() {
-    const pedidoId = this.pedido().id;
-    
-    this.carteiraService.pagarPedido(pedidoId).subscribe({
-      next: (res: any) => {
-        alert('Pagamento realizado com sucesso!');
-        this.carregarDados(pedidoId);
-      },
-      error: (err: any) => alert('Erro no pagamento: ' + (err.error?.message || err.message))
+
+  verificarPagamento() {
+    const valor = this.pedido().valorTotal;
+    const saldo = this.saldoCarteira();
+    const falta = valor - saldo;
+
+    if (saldo < valor) {
+      this.configurarModal({
+        titulo: 'Saldo Insuficiente',
+        mensagem: `Você tem <strong>R$ ${saldo}</strong> e o pedido é <strong>R$ ${valor}</strong>.<br><br>
+                   Faltam <strong>R$ ${falta.toFixed(2)}</strong>.<br>
+                   Vamos para a carteira fazer um depósito?`,
+        tipo: 'warning', 
+        txtConfirmar: 'Sim, ir para Depósito',
+        txtCancelar: 'Agora não',
+        acao: () => {
+          this.fecharModal();
+          this.router.navigate(['/carteira']); // REDIRECTttttttt AQUIIIIIIII
+        }
+      });
+      return;
+    }
+
+    this.configurarModal({
+      titulo: 'Confirmar Pagamento',
+      mensagem: `Deseja pagar <strong>R$ ${valor}</strong> usando seu saldo de cashback?`,
+      tipo: 'success', // Verde
+      txtConfirmar: 'Confirmar Pagamento',
+      acao: () => this.efetuarPagamentoReal()
     });
   }
 
-  cancelarPedido() {
-    if (!confirm('Tem certeza? O valor será estornado para sua carteira.')) return;
-
-    const pedidoId = this.pedido().id;
-    
-    this.pedidoService.cancelar(pedidoId).subscribe({
+  efetuarPagamentoReal() {
+    this.processando.set(true);
+    this.pedidoService.pagar(this.pedido().id).subscribe({
       next: () => {
-        alert('Pedido cancelado com sucesso.');
-        this.carregarDados(pedidoId);
+        this.processando.set(false);
+        this.fecharModal();
+        alert('Pagamento realizado! ✅'); 
+        this.carregarDados(this.pedido().id);
       },
-      error: (err: any) => alert('Erro ao cancelar: ' + (err.error?.message || err.message))
+      error: (err) => {
+        this.processando.set(false);
+        this.fecharModal(); 
+        alert('Erro: ' + (err.error || 'Falha no pagamento.'));
+      }
     });
   }
 
-  voltar() {
-    this.router.navigate(['/meus-pedidos']);
+
+  prepararCancelamento() {
+    const isPago = this.pedido().status === 'Pago';
+    const msg = isPago 
+      ? `O valor será <strong>estornado integralmente</strong> para sua carteira.` 
+      : `O pedido será cancelado sem custos.`;
+
+    this.configurarModal({
+      titulo: 'Cancelar Pedido?',
+      mensagem: `Tem certeza que deseja cancelar? <br><small>${msg}</small>`,
+      tipo: 'danger', // Vermelho
+      txtConfirmar: 'Sim, Cancelar',
+      acao: () => this.efetuarCancelamentoReal()
+    });
+  }
+
+  efetuarCancelamentoReal() {
+    this.processando.set(true);
+    this.pedidoService.cancelar(this.pedido().id).subscribe({
+      next: () => {
+        this.processando.set(false);
+        this.fecharModal();
+        this.carregarDados(this.pedido().id);
+      },
+      error: (err) => {
+        this.processando.set(false);
+        alert('Erro: ' + err.error?.message);
+      }
+    });
+  }
+
+
+  configurarModal(config: any) {
+    this.modal = { ...this.modal, ...config, aberto: true };
+  }
+
+  fecharModal() {
+    this.modal.aberto = false;
+  }
+
+  executarAcaoModal() {
+    if (this.modal.acao) this.modal.acao();
   }
 }

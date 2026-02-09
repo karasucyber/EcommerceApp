@@ -6,22 +6,32 @@ import { Observable } from 'rxjs';
 export class PedidoService {
   private http = inject(HttpClient);
   
-  // CORREÇÃO: URL completa
+  // URLs COMPLETAS para evitar erro 404
   private readonly API = 'https://localhost:50932/api/pedido';
-
-  listarMeusPedidos(clienteId: number): Observable<any> {
-    return this.http.get<any>(`${this.API}/meus-pedidos/${clienteId}`);
-  }
+  private readonly API_CARTEIRA = 'https://localhost:50932/api/carteira';
 
   obterPorId(id: number): Observable<any> {
     return this.http.get<any>(`${this.API}/${id}`);
   }
 
-  criarPedido(pedido: any): Observable<any> {
-    return this.http.post<any>(this.API, pedido);
+  // Backend espera PATCH para cancelar
+  cancelar(id: number): Observable<any> {
+    return this.http.patch(`${this.API}/${id}/cancelar`, {});
+  }
+  
+pagar(id: number): Observable<any> {
+    return this.http.post(
+      `${this.API_CARTEIRA}/pagar-pedido/${id}`, 
+      {}, 
+      { responseType: 'text' } 
+    );
   }
 
-  cancelar(id: number): Observable<any> {
-    return this.http.put(`${this.API}/${id}/cancelar`, {});
+  listarMeusPedidos(clienteId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.API}/meus-pedidos/${clienteId}`);
+  }
+  
+  criarPedido(dto: any): Observable<any> {
+    return this.http.post<any>(this.API, dto);
   }
 }
