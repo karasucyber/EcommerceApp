@@ -65,7 +65,7 @@ O Frontend é a interface visual feita em Angular. Mantenha o terminal do Backen
 
 1.  Entre na pasta da interface:
     ```bash
-    cd InterfaceGraphics
+    cd InterfaceGraphics/ecommerce-front
     ```
 
 2.  Instale as dependências (pode demorar alguns minutos na primeira vez):
