@@ -1,0 +1,98 @@
+<div class="page-container" *ngIf="pedido(); else loadingTpl">
+
+  <div class="card-detalhe">
+    <div class="card-header">
+      <div class="header-content">
+        <h1>Pedido #{{ pedido().id }}</h1>
+        <span class="data">{{ pedido().dataCadastro | date:'dd/MM/yyyy HH:mm' }}</span>
+      </div>
+      <div class="status-pill" 
+           [class.pago]="pedido().status === 'Pago'"
+           [class.cancelado]="pedido().status === 'Cancelado'"
+           [class.entregue]="pedido().status === 'Entregue'"
+           [class.pendente]="pedido().status === 'Criado'">
+        {{ pedido().status }}
+      </div>
+    </div>
+
+    <div class="card-body">
+      <h3>Resumo da Compra</h3>
+      <div class="lista-itens">
+        <div *ngFor="let item of pedido().itens" class="item-row">
+          <div class="info">
+            <span class="produto">{{ item.nomeProdutoSnapshot || 'Produto' }}</span>
+            <span class="qtd">Qtd: {{ item.quantidade }}</span>
+          </div>
+          <div class="valor">
+            {{ (item.precoUnitario * item.quantidade) | currency:'BRL' }}
+          </div>
+        </div>
+      </div>
+      <div class="total-section">
+        <span>Total a Pagar</span>
+        <strong>{{ pedido().valorTotal | currency:'BRL' }}</strong>
+      </div>
+    </div>
+
+    <div class="card-footer">
+      <button class="btn-outline" routerLink="/vitrine">Voltar</button>
+
+      <div class="action-buttons">
+        
+        <button *ngIf="pedido().status === 'Criado'" 
+                class="btn-primary" 
+                (click)="verificarPagamento()">
+          💳 Pagar (Saldo: {{ saldoCarteira() | currency:'BRL' }})
+        </button>
+
+        <button *ngIf="podeCancelar()" 
+                class="btn-danger" 
+                (click)="prepararCancelamento()">
+          🚫 Cancelar Pedido
+        </button>
+
+        <span *ngIf="pedido().status === 'Entregue'" class="aviso-entregue">
+          ✅ Entregue
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #loadingTpl>
+  <div class="loading">Carregando...</div>
+</ng-template>
+
+
+<div class="modal-backdrop" *ngIf="modal.aberto">
+  <div class="modal-content">
+    
+    <div class="modal-header">
+      <h2>{{ modal.titulo }}</h2>
+    </div>
+
+    <div class="modal-body">
+      <div class="status-icon" [ngClass]="modal.tipo">
+        <span *ngIf="modal.tipo === 'success'">✅</span>
+        <span *ngIf="modal.tipo === 'danger'">⚠️</span>
+        <span *ngIf="modal.tipo === 'info'">ℹ️</span>
+        <span *ngIf="modal.tipo === 'warning'">💰</span>
+      </div>
+
+      <p [innerHTML]="modal.mensagem"></p>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn-secondary" (click)="fecharModal()">
+        {{ modal.txtCancelar || 'Voltar' }}
+      </button>
+      
+      <button class="btn-confirm" 
+              [ngClass]="modal.tipo"
+              (click)="executarAcaoModal()" 
+              [disabled]="processando()">
+        {{ processando() ? 'Processando...' : modal.txtConfirmar }}
+      </button>
+    </div>
+  </div>
+</div>

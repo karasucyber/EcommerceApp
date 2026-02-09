@@ -1,0 +1,18 @@
+<div class="container" style="padding: 2rem; max-width: 400px; margin: 0 auto;">
+  <h2>Nova Conta</h2>
+  <form (ngSubmit)="cadastrar()">
+    <div style="margin-bottom: 1rem;">
+      <input type="text" [(ngModel)]="form.nome" name="nome" placeholder="Nome Completo" required style="width: 100%; padding: 8px;">
+    </div>
+    <div style="margin-bottom: 1rem;">
+      <input type="email" [(ngModel)]="form.email" name="email" placeholder="E-mail" required style="width: 100%; padding: 8px;">
+    </div>
+    <div style="margin-bottom: 1rem;">
+      <input type="password" [(ngModel)]="form.senha" name="senha" placeholder="Senha" required style="width: 100%; padding: 8px;">
+    </div>
+    <button type="submit" [disabled]="loading" style="width: 100%; padding: 10px; background: #007bff; color: white; border: none;">
+      {{ loading ? 'Criando...' : 'Cadastrar' }}
+    </button>
+  </form>
+  <a routerLink="/login" style="display: block; text-align: center; margin-top: 10px;">Já tenho conta</a>
+</div>

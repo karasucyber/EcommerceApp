@@ -1,0 +1,25 @@
+<div class="container-admin">
+  <div class="card-form">
+    <h2>👤 Novo Cliente</h2>
+    <div class="campo"><label>Nome</label><input [(ngModel)]="nome"></div>
+    <div class="campo"><label>Email</label><input [(ngModel)]="email"></div>
+    <div class="campo"><label>CPF</label><input [(ngModel)]="cpf"></div>
+    <button (click)="cadastrar()" [disabled]="loading()">Salvar</button>
+  </div>
+
+  <div class="card-lista">
+    <h3>Clientes Cadastrados</h3>
+    <div class="tabela-scroll">
+      <table>
+        <thead><tr><th>Nome</th><th>CPF</th><th>Email</th></tr></thead>
+        <tbody>
+          <tr *ngFor="let c of clientesLista()">
+            <td>{{ c.nome }}</td>
+            <td>{{ c.cpf }}</td>
+            <td>{{ c.email }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
