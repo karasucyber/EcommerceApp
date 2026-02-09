@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".gitinore" />
+  </Folder>
+  <Project Path="Ecommerce.Api/Ecommerce.Api.csproj" />
+  <Project Path="Ecommerce.Application/Ecommerce.Application.csproj" />
+  <Project Path="Ecommerce.Domain/Ecommerce.Domain.csproj" />
+  <Project Path="Ecommerce.Identity/Ecommerce.Identity.csproj" />
+  <Project Path="Ecommerce.Infra/Ecommerce.Infra.csproj" />
+  <Project Path="Ecommerce.Tests/Ecommerce.Tests.csproj" />
+</Solution>

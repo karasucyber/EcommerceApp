@@ -1,0 +1,38 @@
+<aside class="sidebar">
+  <div class="logo">
+    <h2>GPS Store</h2>
+    <span>E-commerce</span>
+  </div>
+
+  <nav class="menu">
+    <p class="section-title">PRINCIPAL</p>
+    
+    <a routerLink="/vitrine" routerLinkActive="active">
+      🛍️ Vitrine
+    </a>
+    
+    <a routerLink="/carteira" routerLinkActive="active">
+      💳 Minha Carteira
+    </a>
+
+    <a routerLink="/meus-pedidos" routerLinkActive="active">
+      📦 Meus Pedidos
+    </a>
+
+    <p class="section-title">ADMINISTRATIVO</p>
+
+    <a routerLink="/cadastro-produto" routerLinkActive="active">
+      ➕ Novo Produto
+    </a>
+
+    <a routerLink="/cadastro" routerLinkActive="active">
+      👤 Novo Cliente
+    </a>
+  </nav>
+
+  <div class="footer">
+    <button (click)="logout()">
+      🚪 Sair
+    </button>
+  </div>
+</aside>

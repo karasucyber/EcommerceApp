@@ -1,0 +1,29 @@
+.container { max-width: 800px; margin: 2rem auto; padding: 0 1rem; font-family: 'Segoe UI', sans-serif; }
+header { margin-bottom: 2rem; h1 { color: #1e3a8a; margin: 0; } }
+
+.filtros {
+  display: flex; gap: 10px; margin-bottom: 20px; overflow-x: auto;
+  button {
+    padding: 8px 16px; border: 1px solid #cbd5e1; background: white; border-radius: 20px; cursor: pointer; color: #64748b; font-weight: 600;
+    &.ativo { background: #1e3a8a; color: white; border-color: #1e3a8a; }
+    &:hover:not(.ativo) { background: #f1f5f9; }
+  }
+}
+
+.card-pedido {
+  background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 15px; margin-bottom: 15px;
+  display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: 0.2s;
+  &:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); border-color: #3b82f6; }
+}
+
+.info { display: flex; flex-direction: column; strong { color: #1e293b; } .data { font-size: 0.8rem; color: #94a3b8; } }
+
+.status-badge {
+  padding: 5px 12px; border-radius: 15px; font-size: 0.75rem; font-weight: bold; text-transform: uppercase;
+  &.pago { background: #dcfce7; color: #166534; }
+  &.cancelado { background: #fee2e2; color: #991b1b; }
+  &.pendente { background: #fef3c7; color: #92400e; }
+}
+
+.total { font-weight: bold; color: #3b82f6; display: flex; align-items: center; gap: 10px; }
+.empty { text-align: center; color: #94a3b8; padding: 40px; }

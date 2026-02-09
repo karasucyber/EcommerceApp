@@ -1,0 +1,24 @@
+<div class="login-wrapper">
+  <div class="login-box">
+    <div class="login-logo">
+      <h1>GRUPO <span>GPS</span></h1>
+      <p>Acesso ao Sistema E-commerce</p>
+    </div>
+
+    <form (ngSubmit)="onLogin()" #f="ngForm">
+      <div class="input-group">
+        <label>E-mail Corporativo</label>
+        <input type="email" name="email" [(ngModel)]="credentials.email" required placeholder="Digite seu e-mail">
+      </div>
+
+      <div class="input-group">
+        <label>Senha</label>
+        <input type="password" name="senha" [(ngModel)]="credentials.senha" required placeholder="Digite sua senha">
+      </div>
+
+      <button type="submit" class="btn-gps" [disabled]="!f.valid">Entrar</button>
+
+      <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,41 @@
+<div class="container">
+  <header>
+    <h1>Meus Pedidos</h1>
+    <p>Acompanhe seu histórico de compras</p>
+  </header>
+
+  <div class="filtros">
+    <button [class.ativo]="filtroAtual() === 'Todos'" (click)="filtrar('Todos')">Todos</button>
+    <button [class.ativo]="filtroAtual() === 'Criado'" (click)="filtrar('Criado')">Pendentes</button>
+    <button [class.ativo]="filtroAtual() === 'Pago'" (click)="filtrar('Pago')">Pagos</button>
+    <button [class.ativo]="filtroAtual() === 'Cancelado'" (click)="filtrar('Cancelado')">Cancelados</button>
+  </div>
+
+  <div class="lista">
+    <div *ngFor="let p of pedidosFiltrados()" class="card-pedido" [routerLink]="['/pedido', p.id]">
+      
+      <div class="info">
+        <strong>Pedido #{{ p.id }}</strong>
+        <span class="data">{{ p.dataCadastro | date:'dd/MM/yyyy' }}</span>
+      </div>
+
+      <div class="status-badge" [ngClass]="{
+        'pago': p.status === 'Pago',
+        'cancelado': p.status === 'Cancelado',
+        'pendente': p.status === 'Criado' || p.status === 'Pendente'
+      }">
+        {{ p.status }}
+      </div>
+
+      <div class="total">
+        {{ p.valorTotal | currency:'BRL' }}
+        <span class="seta">➔</span>
+      </div>
+
+    </div>
+    
+    <div *ngIf="pedidosFiltrados().length === 0" class="empty">
+      Nenhum pedido encontrado com este status.
+    </div>
+  </div>
+</div>

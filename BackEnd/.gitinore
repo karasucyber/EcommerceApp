@@ -1,0 +1,77 @@
+## Visual Studio & .NET Core
+.vs/
+bin/
+obj/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.dll
+*.pdb
+*.exe
+*.cache
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+## VS Code
+.vscode/
+
+## User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+## Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+
+## Tooling
+_ReSharper*/
+*.ReSharper
+*.resharper
+.rider/
+
+## Environment Variables & Secrets (SEGURANÇA!)
+.env
+appsettings.Development.json
+appsettings.Local.json
+*.pfx
+*.key
+
+## Angular / Node (Front-end)
+node_modules/
+dist/
+/dist
+/.angular
+/out-tsc
+/bazel-out
+/connect.lock
+/coverage
+/devtools
+/ng-build-analytics.json
+npm-debug.log
+yarn-error.log
+testem.log
+/typings
+
+## OS Generated
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db

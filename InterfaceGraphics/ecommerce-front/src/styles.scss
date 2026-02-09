@@ -1,0 +1,28 @@
+:root {
+  --gps-blue: #001f3f; 
+  --gps-white: #ffffff;
+  --gps-light-bg: #f8f9fa;
+  --gps-gray: #6c757d;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: var(--gps-light-bg);
+  color: #333;
+}
+
+.btn-gps {
+  background-color: var(--gps-blue);
+  color: var(--gps-white);
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 4px;
+  font-weight: 600;
+  transition: opacity 0.2s;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.9;
+  }
+}

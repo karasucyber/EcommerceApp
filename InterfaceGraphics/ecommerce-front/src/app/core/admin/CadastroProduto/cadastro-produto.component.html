@@ -1,0 +1,57 @@
+<div class="container-admin">
+  
+  <div class="card-form">
+    <h2>📦 Novo Produto</h2>
+    
+    <div class="campo">
+      <label>Nome</label>
+      <input [(ngModel)]="nome" placeholder="Ex: Monitor 24pol">
+    </div>
+
+    <div class="row">
+      <div class="campo">
+        <label>SKU</label>
+        <input [(ngModel)]="sku" placeholder="MON-24">
+      </div>
+      <div class="campo">
+        <label>Preço (R$)</label>
+        <input type="number" [(ngModel)]="precoVenda">
+      </div>
+    </div>
+    
+    <div class="campo">
+      <label>Estoque</label>
+      <input type="number" [(ngModel)]="estoque">
+    </div>
+
+    <button (click)="salvar()" [disabled]="loading()">
+      {{ loading() ? 'Salvando...' : 'Cadastrar' }}
+    </button>
+  </div>
+
+  <div class="card-lista">
+    <h3>Produtos Cadastrados ({{ produtosLista().length }})</h3>
+    
+    <div class="tabela-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>SKU</th>
+            <th>Nome</th>
+            <th>Preço</th>
+            <th>Estoque</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let p of produtosLista()">
+            <td>{{ p.sku }}</td>
+            <td>{{ p.nome }}</td>
+            <td>{{ p.precoVenda | currency:'BRL' }}</td>
+            <td>{{ p.estoqueAtual }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>

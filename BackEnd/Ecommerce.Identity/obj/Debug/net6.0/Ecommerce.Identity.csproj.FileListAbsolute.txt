@@ -1,0 +1,16 @@
+C:\Users\marqu\Desktop\Projetos\ProjetoGPS\BackEnd\Ecommerce.Identity\bin\Debug\net6.0\Ecommerce.Identity.deps.json
+C:\Users\marqu\Desktop\Projetos\ProjetoGPS\BackEnd\Ecommerce.Identity\bin\Debug\net6.0\Ecommerce.Identity.dll
+C:\Users\marqu\Desktop\Projetos\ProjetoGPS\BackEnd\Ecommerce.Identity\bin\Debug\net6.0\Ecommerce.Identity.pdb
+C:\Users\marqu\Desktop\Projetos\ProjetoGPS\BackEnd\Ecommerce.Identity\bin\Debug\net6.0\Ecommerce.Domain.dll
+C:\Users\marqu\Desktop\Projetos\ProjetoGPS\BackEnd\Ecommerce.Identity\bin\Debug\net6.0\Ecommerce.Domain.pdb
+C:\Users\marqu\Desktop\Projetos\ProjetoGPS\BackEnd\Ecommerce.Identity\obj\Debug\net6.0\Ecommerce.Identity.csproj.AssemblyReference.cache
+C:\Users\marqu\Desktop\Projetos\ProjetoGPS\BackEnd\Ecommerce.Identity\obj\Debug\net6.0\Ecommerce.Identity.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\marqu\Desktop\Projetos\ProjetoGPS\BackEnd\Ecommerce.Identity\obj\Debug\net6.0\Ecommerce.Identity.AssemblyInfoInputs.cache
+C:\Users\marqu\Desktop\Projetos\ProjetoGPS\BackEnd\Ecommerce.Identity\obj\Debug\net6.0\Ecommerce.Identity.AssemblyInfo.cs
+C:\Users\marqu\Desktop\Projetos\ProjetoGPS\BackEnd\Ecommerce.Identity\obj\Debug\net6.0\Ecommerce.Identity.csproj.CoreCompileInputs.cache
+C:\Users\marqu\Desktop\Projetos\ProjetoGPS\BackEnd\Ecommerce.Identity\obj\Debug\net6.0\Ecommerce.Identity.sourcelink.json
+C:\Users\marqu\Desktop\Projetos\ProjetoGPS\BackEnd\Ecommerce.Identity\obj\Debug\net6.0\Ecommerc.C96AB5E0.Up2Date
+C:\Users\marqu\Desktop\Projetos\ProjetoGPS\BackEnd\Ecommerce.Identity\obj\Debug\net6.0\Ecommerce.Identity.dll
+C:\Users\marqu\Desktop\Projetos\ProjetoGPS\BackEnd\Ecommerce.Identity\obj\Debug\net6.0\refint\Ecommerce.Identity.dll
+C:\Users\marqu\Desktop\Projetos\ProjetoGPS\BackEnd\Ecommerce.Identity\obj\Debug\net6.0\Ecommerce.Identity.pdb
+C:\Users\marqu\Desktop\Projetos\ProjetoGPS\BackEnd\Ecommerce.Identity\obj\Debug\net6.0\ref\Ecommerce.Identity.dll
