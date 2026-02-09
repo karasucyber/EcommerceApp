@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Ecommerce.Infra")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+774622506b65f971abe31df841e01eea6825b37d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f8ab367d62c5c0d477b41bb1d67de51f865ad95c")]
 [assembly: System.Reflection.AssemblyProductAttribute("Ecommerce.Infra")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Ecommerce.Infra")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
