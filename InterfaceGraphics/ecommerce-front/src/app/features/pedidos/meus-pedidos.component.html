@@ -1,0 +1,46 @@
+<div class="container-pedidos">
+  <div class="header-page">
+    <h1>Meus Pedidos</h1>
+    <p>Acompanhe o histórico das suas compras.</p>
+  </div>
+
+  <div *ngIf="carregando()" class="loading">
+    Carregando histórico...
+  </div>
+
+  <div *ngIf="!carregando() && pedidos().length > 0" class="lista">
+    
+    <div *ngFor="let pedido of pedidos()" class="card-pedido" (click)="verDetalhes(pedido.id)">
+      
+      <div class="pedido-top">
+        <span class="numero">Pedido #{{ pedido.id }}</span>
+        <span class="data">{{ pedido.dataCadastro | date:'dd/MM/yyyy' }}</span>
+      </div>
+
+      <div class="pedido-info">
+        <div class="status-badge" [attr.data-status]="pedido.statusId">
+          {{ pedido.status }}
+        </div>
+        
+        <div class="resumo">
+          <span>{{ pedido.qtdItens }} item(ns)</span>
+          <span class="divisor">•</span>
+          <strong>{{ pedido.valorTotal | currency:'BRL' }}</strong>
+        </div>
+      </div>
+
+      <div class="pedido-action">
+        Ver detalhes <i class="icon-arrow">→</i>
+      </div>
+    
+    </div>
+
+  </div>
+
+  <div *ngIf="!carregando() && pedidos().length === 0" class="empty-state">
+    <div class="icon-empty">📦</div>
+    <h3>Você ainda não fez nenhum pedido.</h3>
+    <p>Que tal dar uma olhada nas nossas ofertas?</p>
+    <button routerLink="/dashboard" class="btn-ir-compras">Ir às compras</button>
+  </div>
+</div>

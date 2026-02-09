@@ -1,0 +1,26 @@
+<div class="vitrine-container">
+  
+  <button class="floating-cart" (click)="cartService.abrir()">
+    🛒 <span class="badge" *ngIf="cartService.qtdTotal() > 0">{{ cartService.qtdTotal() }}</span>
+  </button>
+
+  <header>
+    <h1>Loja Virtual</h1>
+    <p>Adicione itens e finalize sua compra.</p>
+  </header>
+
+  <div class="grid-produtos">
+    <div *ngFor="let prod of produtos()" class="card-produto">
+      <div class="info-box">
+        <h3>{{ prod.nome }}</h3>
+        <p class="price">{{ prod.precoVenda | currency:'BRL' }}</p>
+        
+        <button class="btn-add" (click)="adicionarAoCarrinho(prod)">
+          + Adicionar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <app-cart-modal></app-cart-modal>
+</div>

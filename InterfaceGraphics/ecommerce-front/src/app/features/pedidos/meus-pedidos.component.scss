@@ -1,0 +1,104 @@
+.container-pedidos {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.header-page {
+  margin-bottom: 2rem;
+  h1 { margin: 0; color: #333; font-size: 1.8rem; }
+  p { color: #666; margin-top: 5px; }
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  color: #888;
+  font-style: italic;
+}
+
+.card-pedido {
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 1.2rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
+  overflow: hidden;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+    border-color: #bcd1e8;
+  }
+}
+
+.pedido-top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  
+  .numero { font-weight: bold; color: #333; font-size: 1.1rem; }
+  .data { color: #888; font-size: 0.9rem; }
+}
+
+.pedido-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.status-badge {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+
+  &[data-status="1"] { background: #e3f2fd; color: #1565c0; } 
+  &[data-status="3"] { background: #e8f5e9; color: #2e7d32; } 
+  &[data-status="6"] { background: #ffebee; color: #c62828; } 
+  &[data-status="4"] { background: #fff3e0; color: #ef6c00; }
+}
+
+.resumo {
+  color: #555;
+  .divisor { margin: 0 5px; color: #ccc; }
+  strong { color: #333; font-size: 1.1rem; }
+}
+
+.pedido-action {
+  margin-top: 1rem;
+  border-top: 1px solid #f0f0f0;
+  padding-top: 0.8rem;
+  text-align: right;
+  color: #2563eb;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.empty-state {
+  text-align: center;
+  margin-top: 3rem;
+  
+  .icon-empty { font-size: 4rem; margin-bottom: 1rem; display: block; }
+  h3 { color: #333; margin-bottom: 0.5rem; }
+  p { color: #666; margin-bottom: 1.5rem; }
+  
+  .btn-ir-compras {
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+    
+    &:hover { background: #1d4ed8; }
+  }
+}

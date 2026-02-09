@@ -1,0 +1,36 @@
+<div class="overlay" *ngIf="cartService.aberto()" (click)="cartService.fechar()"></div>
+
+<div class="drawer" [class.open]="cartService.aberto()">
+  
+  <div class="header">
+    <h2>Seu Carrinho ({{ cartService.qtdTotal() }})</h2>
+    <button class="btn-close" (click)="cartService.fechar()">✕</button>
+  </div>
+
+  <div class="body">
+    <div class="item" *ngFor="let item of cartService.itens()">
+      <div class="img-placeholder">{{ item.produto.nome.charAt(0) }}</div>
+      <div class="info">
+        <h4>{{ item.produto.nome }}</h4>
+        <p>R$ {{ item.produto.precoVenda | number:'1.2-2' }} x {{ item.quantidade }}</p>
+      </div>
+      <button class="btn-remove" (click)="cartService.remover(item.produto.sku)">🗑️</button>
+    </div>
+
+    <div class="empty" *ngIf="cartService.itens().length === 0">
+      <p>Seu carrinho está vazio.</p>
+      <button (click)="cartService.fechar()">Continuar comprando</button>
+    </div>
+  </div>
+
+  <div class="footer" *ngIf="cartService.itens().length > 0">
+    <div class="total-row">
+      <span>Total</span>
+      <strong>R$ {{ cartService.total() | number:'1.2-2' }}</strong>
+    </div>
+    <button class="btn-checkout" [disabled]="finalizando" (click)="finalizarCompra()">
+      {{ finalizando ? 'Processando...' : 'Finalizar Pedido' }}
+    </button>
+  </div>
+
+</div>

@@ -1,0 +1,39 @@
+<aside class="sidebar-wrapper">
+  
+  <div class="brand">
+    <div class="logo-icon">🛒</div>
+    <h2>DevStore</h2>
+  </div>
+
+  <nav class="nav-menu">
+    
+    <span class="section-title">Principal</span>
+    
+    <a routerLink="/vitrine" routerLinkActive="active" class="nav-item">
+      <i class="icon">🛍️</i> Loja
+    </a>
+    
+    <a routerLink="/meus-pedidos" routerLinkActive="active" class="nav-item">
+      <i class="icon">📦</i> Meus Pedidos
+    </a>
+    
+    <a routerLink="/carteira" routerLinkActive="active" class="nav-item">
+      <i class="icon">💳</i> Carteira
+    </a>
+
+    <div class="divider"></div>
+    <span class="section-title">Administrativo</span>
+
+    <a routerLink="/dashboard" routerLinkActive="active" class="nav-item admin">
+      <i class="icon">📊</i> Dashboard Financeiro
+    </a>
+
+  </nav>
+
+  <div class="footer">
+    <button (click)="logout()" class="btn-logout">
+      <i>🚪</i> Sair
+    </button>
+  </div>
+
+</aside>

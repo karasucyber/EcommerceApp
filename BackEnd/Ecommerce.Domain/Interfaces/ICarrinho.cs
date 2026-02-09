@@ -1,0 +1,17 @@
+﻿//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Text;
+//using System.Threading.Tasks;
+
+//namespace Ecommerce.Domain.Interfaces
+//{
+//    public interface ICarrinhoService
+//    {
+//        Task SincronizarCarrinhoAsync(int clienteId, List<CartItemDto> itensLocais);
+
+//        Task<CarrinhoDto> ObterCarrinhoPorClienteAsync(int clienteId);
+
+//        Task LimparCarrinhoAsync(int clienteId);
+//    }
+//}

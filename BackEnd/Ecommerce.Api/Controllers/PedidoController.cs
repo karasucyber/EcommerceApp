@@ -56,6 +56,51 @@ namespace Ecommerce.Api.Controllers
             }
         }
 
+        [HttpGet("meus-pedidos/{clienteId}")]
+        public async Task<IActionResult> ObterMeusPedidos(int clienteId)
+        {
+           
+            var todosPedidos = await _uow.Pedidos.ObterTodosAsync();
+            var meusPedidos = todosPedidos
+                .Where(p => p.ClienteId == clienteId)
+                .OrderByDescending(p => p.DataCadastro) 
+                .Select(p => new
+                {
+                    p.Id,
+                    p.DataCadastro,
+                    p.ValorTotal,
+                    Status = p.Status.ToString(),
+                    StatusId = (int)p.Status, 
+                    QtdItens = p.Itens.Count
+                });
+
+            return Ok(meusPedidos);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> ObterPorId(int id)
+        {
+            var pedido = await _uow.Pedidos.ObterPorIdCompletoAsync(id);
+            if (pedido == null) return NotFound();
+
+            return Ok(new
+            {
+                pedido.Id,
+                pedido.ClienteId,
+                pedido.DataCadastro,
+                pedido.ValorTotal,
+                Status = pedido.Status.ToString(),
+                StatusId = (int)pedido.Status,
+                pedido.EnderecoId, 
+                Itens = pedido.Itens.Select(i => new {
+                    i.ProdutoId,
+                    i.NomeProdutoSnapshot,
+                    i.Quantidade,
+                    i.PrecoUnitario
+                })
+            });
+        }
+
         [HttpPatch("{id}/cancelar")]
         public async Task<IActionResult> Cancelar(int id)
         {

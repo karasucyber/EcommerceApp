@@ -1,0 +1,10 @@
+<div style="padding: 2rem;">
+  <h1>Minha Carteira</h1>
+  <div style="background: #eee; padding: 2rem; border-radius: 8px; margin-bottom: 1rem;">
+    <h3>Saldo Disponível</h3>
+    <h1 style="color: green;">{{ saldo() | currency:'BRL' }}</h1>
+  </div>
+  <button (click)="depositar()" style="padding: 10px 20px; background: green; color: white; border: none; cursor: pointer;">
+    + Adicionar R$ 100,00
+  </button>
+</div>

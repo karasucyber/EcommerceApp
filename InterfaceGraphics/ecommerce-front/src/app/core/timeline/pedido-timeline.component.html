@@ -1,0 +1,19 @@
+<div class="timeline-wrapper" [class.is-cancelled]="statusAtual === 6">
+  <div class="timeline-track">
+    <div class="step" *ngFor="let etapa of etapas" 
+         [class.completed]="isConcluida(etapa.valor)"
+         [class.active]="isAtiva(etapa.valor)">
+      
+      <div class="node">
+        <span *ngIf="isConcluida(etapa.valor)">✓</span>
+        <span *ngIf="!isConcluida(etapa.valor) && !isAtiva(etapa.valor)"></span>
+      </div>
+      
+      <label>{{ etapa.label }}</label>
+    </div>
+  </div>
+
+  <div class="cancel-badge" *ngIf="statusAtual === 6">
+    <i class="icon-info"></i> ESTE PEDIDO FOI CANCELADO
+  </div>
+</div>
