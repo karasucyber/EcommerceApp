@@ -74,7 +74,7 @@ O Frontend é a interface visual feita em Angular. Mantenha o terminal do Backen
 
 3.  Inicie o servidor de desenvolvimento:
     ```bash
-    ng serve -o
+    npm start
     ```
     > O comando `-o` abrirá automaticamente o navegador em `http://localhost:4200`.
 
