@@ -21,14 +21,12 @@ export class LoginComponent {
   onLogin() {
     this.authService.login(this.credentials).subscribe({
       next: (user) => {
-        if (user.perfil === 'Administrador') {
-          this.router.navigate(['/admin/dashboard']);
-        } else {
-          this.router.navigate(['/pedidos']);
-        }
+        console.log('Autenticação bem-sucedida para o Grupo GPS');
+        this.router.navigate(['/vitrine']);
       },
-      error: () => {
-        this.errorMessage = 'E-mail ou senha inválidos.';
+      error: (err) => {
+        console.error('Falha no login:', err);
+        this.errorMessage = 'Credenciais inválidas. Verifique seu e-mail corporativo e senha.';
       }
     });
   }

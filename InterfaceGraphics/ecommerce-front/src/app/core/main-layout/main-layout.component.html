@@ -1,0 +1,18 @@
+<div class="layout-wrapper">
+  <header class="top-header">
+    <button class="hamburger-btn" (click)="toggleMenu()">
+      ☰
+    </button>
+    <div class="logo">GPS</div>
+  </header>
+
+  <aside class="sidebar" [class.aberta]="menuAberto">
+    <app-sidebar></app-sidebar>
+  </aside>
+
+  <div *ngIf="menuAberto" class="backdrop" (click)="fecharMenu()"></div>
+
+  <main class="content-area">
+    <router-outlet></router-outlet>
+  </main>
+</div>
